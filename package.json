@@ -1,0 +1,23 @@
+{
+  "name": "react-dev-app",
+  "version": "1.0.0",
+  "description": "This is a react application",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lakkappa/namaste-react-app.git"
+  },
+  "keywords": [
+    "react",
+    "namaste-react"
+  ],
+  "author": "lakkappa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lakkappa/namaste-react-app/issues"
+  },
+  "homepage": "https://github.com/lakkappa/namaste-react-app#readme"
+}
