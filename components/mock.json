@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Pizza Hut",
+        "price": 200.00,
+        "rating": 4.5,
+        "img": "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2024/12/5/dc74a4b7-8d63-4eb7-91c9-048973c2cc99_1003414.jpg"
+    },
+    {
+        "name": "KFC",
+        "price": 300.00,
+        "rating": 3.5,
+        "img":"https://content.jdmagicbox.com/comp/pune/b1/020pxx20.xx20.220802033156.r9b1/catalogue/kfc-chinchwad-east-pune-fried-chicken-delivery-restaurants-126svlbrzp.jpg"
+    }
+]

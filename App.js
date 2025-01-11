@@ -1,26 +1,17 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
-
-
+import Header from "./components/Header";
+import Body from "./components/Body";
 // This is example of ComponentComposition
-const Title = () => {
+const App = () => {
     return (
         <div>
-            Namaste React
+            <Header />
+            <Body />
         </div>
     )
 }
-
-const ReactComponent = () => {
-    return (
-        <div>
-            <Title />
-            This is a Functional Component
-        </div>
-    )
-}
-
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<ReactComponent />);
+root.render(<App />);
