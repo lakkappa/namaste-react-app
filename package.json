@@ -4,6 +4,8 @@
   "description": "This is a react application",
   "main": "App.js",
   "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "repository": {
@@ -28,7 +30,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
-  "browserslist":[
+  "browserslist": [
     "last 2 versions"
   ]
 }

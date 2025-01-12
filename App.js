@@ -5,7 +5,7 @@ import Body from "./components/Body";
 // This is example of ComponentComposition
 const App = () => {
     return (
-        <div>
+        <div className="app">
             <Header />
             <Body />
         </div>

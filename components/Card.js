@@ -5,11 +5,11 @@ const Card = (props) => {
     return (
         <div className="card-list">
             <div className="card-container">
-                <img className="card-img" src={CARD_IMG1} alt="card-image" />
+                <img className="card-img" src={CDN_URL + cardData.info.cloudinaryImageId} alt="card-image" />
                 <div className="card-content">
-                    <h2>{cardData.info.name}</h2>
-                    <h3>{cardData.info.costForTwo}</h3>
-                    <h3>{cardData.info.avgRating}</h3>
+                    <h3>{cardData.info.name}</h3>
+                    <h4>{cardData.info.costForTwo}</h4>
+                    <h4>{cardData.info.avgRating}</h4>
                 </div>
             </div>
         </div>
