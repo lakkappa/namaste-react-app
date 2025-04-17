@@ -1,7 +1,6 @@
 import { MENU_ITEM_IMG } from "../utils/Constants";
 const RestaurantsCard = (props) => {
     const {
-        id,
         cloudinaryImageId,
         name,
         costForTwo,
@@ -21,6 +20,18 @@ const RestaurantsCard = (props) => {
                 <p>{cuisines.join(', ')}</p>
             </div>
         </div>
-    )
-}
+    );
+};
+export const promtedRestaurants = (RestaurantsCard) => {
+    return (props) => {
+        return (
+            <div>
+                <label className="bg-black text-white absolute p-2 rounded">Promoted</label>
+                <RestaurantsCard {...props} />
+            </div>
+        );
+    };
+};
+
 export default RestaurantsCard;
+

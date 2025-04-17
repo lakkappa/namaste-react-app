@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import FoodMenu from "./FoodMenu";
-import RestaurantsCard from "./RestaurantsCard";
+import RestaurantsCard, { promtedRestaurants } from "./RestaurantsCard";
 import { FOOD_API } from "../utils/Constants";
 import Shimmer from "./Shimmer";
 import ShimmerImage from "./ShimmerImage";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/useUserContext";
 
 const Body = () => {
     const [foodAPIData, setFoodAPIData] = useState([]);
     const [restaurantsItems, setRestaurantsItems] = useState([]);
     const [intialRestaurantsItems, setIntialRestaurantsItems] = useState([]);
     const [searchText, setSearchText] = useState('');
+
+    const PromtedRestaurants = promtedRestaurants(RestaurantsCard);
+
+    const { loggedInUser, setUserName } = useContext(UserContext);
 
     useEffect(() => {
         getFoodAPI();
@@ -73,12 +78,17 @@ const Body = () => {
                 }} />
                 <button className="bg-blue-400 text-white font-bold py-2 px-4 cursor-pointer" onClick={searchHandler}>Search</button>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-10 cursor-pointer rounded" onClick={filterTopRestaurants}>Top Restaurants</button>
+                <div className="text-2xl">UserName: <input value={loggedInUser} className="border border-black p-2" onChange={(e) => {
+                    setUserName(e.target.value);
+                }} /></div>
             </div>
             <div className="flex flex-wrap">
                 {
                     restaurantsItems.map((item) => {
                         return (
-                            <Link to={'restaurants/' + item.info.id} key={item.info.id}><RestaurantsCard restoItem={item} /></Link>
+                            <Link to={'restaurants/' + item.info.id} key={item.info.id}>
+                                {item.info.avgRating > 4.5 ? <PromtedRestaurants restoItem={item} /> : <RestaurantsCard restoItem={item} />}
+                            </Link>
                         )
                     })
                 }

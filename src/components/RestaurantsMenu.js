@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react";
-import { RESTAURANTS_MENU_API, RESTAURANTS_MENU_IMG } from "../utils/Constants";
+import { useContext, useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from 'react-router-dom';
 import useRestaurantsMenu from "../utils/useRestaurantsMenu";
+import RestaurantsCategory from "./RestaurantsCategory";
+import useUserContext from "../utils/useUserContext";
 const RestaurantsMenu = () => {
     const [recommendedItem, setRecommendedItem] = useState([]);
-    const [initialRecommendedItem, setInitialRecommendedItem] = useState([]);
-
+    // const [initialRecommendedItem, setInitialRecommendedItem] = useState([]);
+    const [showIndex, setShowIndex] = useState(0);
     const { resId } = useParams();
     const menuData = useRestaurantsMenu(resId);
+    const { loggedInUser } = useContext(useUserContext);
 
     useEffect(() => {
         if (menuData.length > 0) {
-            const recomendedItem = menuData[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards || [];
-            setRecommendedItem(recomendedItem);
-            setInitialRecommendedItem(recomendedItem);
+            const filterdItem = menuData[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((f) => {
+                return f?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory";
+            });
+            setRecommendedItem(filterdItem);
+            // setInitialRecommendedItem(filterdItem);
         }
     }, [menuData]);
 
@@ -22,54 +26,47 @@ const RestaurantsMenu = () => {
         return <Shimmer />
     }
 
-    const vegHandler = () => {
-        let vegItem = initialRecommendedItem.filter((f) => {
-            return f.card.info.itemAttribute.vegClassifier === 'VEG';
-        })
-        setRecommendedItem(vegItem);
-    }
-
-    const nonVegHandler = () => {
-        const vegItem = initialRecommendedItem.filter((f) => {
-            return f.card.info.itemAttribute.vegClassifier === 'NONVEG';
-        })
-        setRecommendedItem(vegItem);
-    }
+    // const vegHandler = () => {
+    //     const veg = initialRecommendedItem.map((i) => {
+    //         const filtredData = i.card.card.itemCards.filter((f) => {
+    //             return f.card.info.itemAttribute.vegClassifier === 'VEG';
+    //         })
+    //         return filtredData;
+    //     });
+    //     console.log(veg[0], 'results11');
+    //     console.log(recommendedItem[0], 'results11');
+    // }
 
     const { name, avgRatingString, totalRatingsString, costForTwoMessage, cuisines, areaName, sla } = menuData[2]?.card?.card?.info;
 
     return (
         <div className="mx-100 my-10">
-            <h1 className="font-bold text-4xl">{name}</h1>
-            <div className="p-4 my-4 border border-solid border-gray rounded-2xl">
+            <h1 className="font-bold text-center text-4xl mr-50">{name}</h1>
+            <span className="ml-200 pb-5 font-bold text-center text-2xl">User: {loggedInUser}</span>
+            <div className="p-4 border border-solid border-gray rounded-2xl">
                 <h3>{avgRatingString} ({totalRatingsString}) {costForTwoMessage}</h3>
                 <h3 className="text-red-500">{cuisines.join(', ')}</h3>
                 <h3>{areaName}</h3>
                 <h3>{sla.slaString}</h3>
             </div>
-            <div className="food-cat-btns">
-                <button className="bg-green-500 text-white font-bold py-2 px-4 cursor-pointer rounded" onClick={vegHandler}>Veg</button>
-                <button className="bg-red-500 text-white font-bold py-2 px-4 m-10 cursor-pointer rounded" onClick={nonVegHandler}>Non-Veg</button>
-            </div>
-            {/* <div className="restaurants-menu-items"> */}
-            <h2 className="font-bold text-2xl my-5">Recommended</h2>
             {
-
-                recommendedItem.map((recomendedItem) => {
-                    const { name, price, description, id, defaultPrice } = recomendedItem.card.info;
+                recommendedItem.map((category, index) => {
                     return (
-                        <div className="flex justify-between" key={id}>
-                            <div className="rest-recomended-item">
-                                <h4 className="font-bold">{name}</h4>
-                                <h5>₹{price / 100 || defaultPrice / 100}</h5>
-                                <p>{description}</p>
-                            </div>
-                            <img className="mb-10 w-50 h-40" src={RESTAURANTS_MENU_IMG + recomendedItem.card.info.imageId} />
-                        </div>
+                        <RestaurantsCategory
+                            key={category.card.card.categoryId}
+                            data={category?.card?.card}
+                            showItem={index === showIndex ? true : false}
+                            showIndex={() => setShowIndex(index)}
+                        />
                     )
                 })
             }
-            {/* </div> */}
+
+            {/* <div className="food-cat-btns">
+                <button className="bg-green-500 text-white font-bold py-2 px-4 cursor-pointer rounded" onClick={vegHandler}>Veg</button>
+                <button className="bg-red-500 text-white font-bold py-2 px-4 m-10 cursor-pointer rounded" onClick={nonVegHandler}>Non-Veg</button>
+            </div> */}
+
         </div>
     )
 }
