@@ -43,3 +43,19 @@ It is a react application using the namaste react core concepts
 
 # useContext
 - solving the prop driling issue, we can use the useContext, It's a basically global state object, we can use it in our app, wherever you want.
+
+# 1.React Redux
+- When you press the Add button, It dispatch the action, Which calls the reducer function, And   Modifies the slice of a redux store(store).
+- Add Button ->  Dispatch the Action  -> Calls the Reducer -> Update the slice(Have some data).
+- How to read data from cart(slice) -> we have to use the Selector for reading the data from store.
+- 1. Send data to store -> Once clike on the Add button, It's dispacth the action then call's the reducer function, which updates the slice of a redux store.
+- 2. Receive data from store -> Our component(ex: Header comp) is subscribed to store, then using the selector as inbuilt func, we can recived the data in our component(ex: Header comp).
+
+# 2. Redux Toolkit
+- Install @reduxjs/toolkit and react-redux
+- Build our store
+- Connect our stor to our app
+- create slice (cartSlice)
+- dispacth(action)
+- selector
+
