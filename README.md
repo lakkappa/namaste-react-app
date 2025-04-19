@@ -59,3 +59,21 @@ It is a react application using the namaste react core concepts
 - dispacth(action)
 - selector
 
+# Testing
+- Unit Testing -> Testing for small component.
+- Integration Testing -> There are multiple components involed in the testing.
+- End to End (E2E) Testing -> Testing for complete the user flow.
+  - E2E requires external tools like, cypress.
+
+# Testing setup
+- Install React Testing Library
+- Install jest
+- Install Babel dependecies
+- Configure Babel
+- Configure Paracel config file to use for disablling the default configuration.
+- Jest configuration
+    - npx jest --init
+- Install jsdom library
+- Install @babel/preset-react  - to make JSX work in test case
+- Include @babel/preset-react inside my babel.config.js file
+- Install @testing-library/jest-dom
