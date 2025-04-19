@@ -71,8 +71,8 @@ const Body = () => {
                     ))
                 }
             </div>
-            <h1 className="text-2xl py-5 px-5">Restaurants with online food delivery in Bangalore</h1>
-            <div className="flex p-5">
+            <h1 className="pt-20 pb-10 px-5 mx-20 text-4xl">Restaurants with online food delivery in Bangalore</h1>
+            <div className="flex p-5 mx-20">
                 <input type="text" className=" border border-solid border-black" value={searchText} onChange={(e) => {
                     setSearchText(e.target.value);
                 }} />
@@ -82,7 +82,7 @@ const Body = () => {
                     setUserName(e.target.value);
                 }} /></div>
             </div>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap mx-20">
                 {
                     restaurantsItems.map((item) => {
                         return (

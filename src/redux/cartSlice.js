@@ -1,10 +1,13 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import { act } from "react";
 
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
         items: [],
-        name: 'lucky'
+        restoName: '',
+        restoImage: '',
+        areaName: ''
     },
     reducers: {
         addItem: (state, action) => {
@@ -15,10 +18,19 @@ const cartSlice = createSlice({
         },
         clearItem: (state) => {
             state.items.length = [];
+        },
+        restoName: (state, action) => {
+            state.restoName = action.payload;
+        },
+        restoImage: (state, action) => {
+            state.restoImage = action.payload;
+        },
+        areaDetails: (state, action) => {
+            state.areaName = action.payload;
         }
     }
 });
 
-export const { addItem, removeItem, clearItem } = cartSlice.actions;
+export const { addItem, removeItem, clearItem, restoName, restoImage, areaDetails } = cartSlice.actions;
 
 export default cartSlice.reducer;

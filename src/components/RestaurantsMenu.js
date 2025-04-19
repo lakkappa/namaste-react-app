@@ -37,7 +37,7 @@ const RestaurantsMenu = () => {
     //     console.log(recommendedItem[0], 'results11');
     // }
 
-    const { name, avgRatingString, totalRatingsString, costForTwoMessage, cuisines, areaName, sla } = menuData[2]?.card?.card?.info;
+    const { name, avgRatingString, totalRatingsString, costForTwoMessage, cuisines, areaName, sla, cloudinaryImageId } = menuData[2]?.card?.card?.info;
 
     return (
         <div className="mx-100 my-10">
@@ -57,6 +57,9 @@ const RestaurantsMenu = () => {
                             data={category?.card?.card}
                             showItem={index === showIndex ? true : false}
                             showIndex={() => setShowIndex(index)}
+                            restaurantName={name}
+                            areaName={areaName}
+                            cloudinaryImageId={cloudinaryImageId}
                         />
                     )
                 })

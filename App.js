@@ -7,6 +7,7 @@ import About from "./src/components/About";
 import Error from "./src/components/Error";
 import RestaurantsMenu from "./src/components/RestaurantsMenu";
 import Cart from "./src/components/Cart";
+import Payment from "./src/components/Payment";
 import UserContext from "./src/utils/useUserContext";
 import appStore from "./src/redux/appStore";
 import { Provider } from "react-redux";
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: '/cart',
                 element: <Cart />
+            },
+            {
+                path: 'payment',
+                element: <Payment />
             }
         ],
         errorElement: <Error />

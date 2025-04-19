@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ItemList from "./ItemList";
-const RestaurantsCategory = ({ data, showItem, showIndex }) => {
+const RestaurantsCategory = ({ data, showItem, showIndex, restaurantName, areaName, cloudinaryImageId }) => {
     const { title } = data;
 
     const showToggle = () => {
@@ -12,7 +12,7 @@ const RestaurantsCategory = ({ data, showItem, showIndex }) => {
                 <p>{title}({data.itemCards.length})</p>
                 <p>↕️</p>
             </div>
-            {showItem && <ItemList data={data.itemCards} />}
+            {showItem && <ItemList data={data.itemCards} restaurantName={restaurantName} areaName={areaName} cloudinaryImageId={cloudinaryImageId} />}
         </div>
     );
 }
