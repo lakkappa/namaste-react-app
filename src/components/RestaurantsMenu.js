@@ -6,7 +6,7 @@ import RestaurantsCategory from "./RestaurantsCategory";
 import useUserContext from "../utils/useUserContext";
 const RestaurantsMenu = () => {
     const [recommendedItem, setRecommendedItem] = useState([]);
-    // const [initialRecommendedItem, setInitialRecommendedItem] = useState([]);
+    const [initialRecommendedItem, setInitialRecommendedItem] = useState([]);
     const [showIndex, setShowIndex] = useState(0);
     const { resId } = useParams();
     const menuData = useRestaurantsMenu(resId);
@@ -18,7 +18,7 @@ const RestaurantsMenu = () => {
                 return f?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory";
             });
             setRecommendedItem(filterdItem);
-            // setInitialRecommendedItem(filterdItem);
+            setInitialRecommendedItem(filterdItem);
         }
     }, [menuData]);
 
@@ -26,18 +26,45 @@ const RestaurantsMenu = () => {
         return <Shimmer />
     }
 
-    // const vegHandler = () => {
-    //     const veg = initialRecommendedItem.map((i) => {
-    //         const filtredData = i.card.card.itemCards.filter((f) => {
-    //             return f.card.info.itemAttribute.vegClassifier === 'VEG';
-    //         })
-    //         return filtredData;
-    //     });
-    //     console.log(veg[0], 'results11');
-    //     console.log(recommendedItem[0], 'results11');
-    // }
-
     const { name, avgRatingString, totalRatingsString, costForTwoMessage, cuisines, areaName, sla, cloudinaryImageId } = menuData[2]?.card?.card?.info;
+
+    const vegHandler = () => {
+        const vegItems = initialRecommendedItem.map((category) => {
+            const filteredData = category.card.card.itemCards?.filter((item) =>
+                item.card.info.itemAttribute.vegClassifier === "VEG"
+            );
+            return {
+                ...category,
+                card: {
+                    ...category.card,
+                    card: {
+                        ...category.card.card,
+                        itemCards: filteredData,
+                    },
+                },
+            };
+        }).filter(category => category.card.card.itemCards.length > 0);
+        setRecommendedItem(vegItems);
+    }
+
+    const nonVegHandler = () => {
+        const nonVegItems = initialRecommendedItem.map((category) => {
+            const filteredData = category.card.card.itemCards?.filter((item) =>
+                item.card.info.itemAttribute.vegClassifier === "NONVEG"
+            );
+            return {
+                ...category,
+                card: {
+                    ...category.card,
+                    card: {
+                        ...category.card.card,
+                        itemCards: filteredData,
+                    },
+                },
+            };
+        }).filter(category => category.card.card.itemCards.length > 0);
+        setRecommendedItem(nonVegItems);
+    }
 
     return (
         <div className="mx-100 my-10">
@@ -49,11 +76,18 @@ const RestaurantsMenu = () => {
                 <h3>{areaName}</h3>
                 <h3>{sla.slaString}</h3>
             </div>
+
+            <div className="flex my-10 pr-10">
+                <button className="py-3 px-5 m-4 bg-green-500 cursor-pointer" onClick={vegHandler}>Veg</button>
+                <button className="py-3 px-5 m-4 bg-red-500 cursor-pointer" onClick={nonVegHandler}>Non Veg</button>
+            </div>
+
             {
                 recommendedItem.map((category, index) => {
+
                     return (
                         <RestaurantsCategory
-                            key={category.card.card.categoryId}
+                            key={category?.card?.card?.categoryId}
                             data={category?.card?.card}
                             showItem={index === showIndex ? true : false}
                             showIndex={() => setShowIndex(index)}
@@ -64,12 +98,6 @@ const RestaurantsMenu = () => {
                     )
                 })
             }
-
-            {/* <div className="food-cat-btns">
-                <button className="bg-green-500 text-white font-bold py-2 px-4 cursor-pointer rounded" onClick={vegHandler}>Veg</button>
-                <button className="bg-red-500 text-white font-bold py-2 px-4 m-10 cursor-pointer rounded" onClick={nonVegHandler}>Non-Veg</button>
-            </div> */}
-
         </div>
     )
 }

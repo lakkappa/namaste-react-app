@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { RESTAURANTS_MENU_IMG } from "../utils/Constants";
 import { addItem, restoName, restoImage, areaDetails } from "../redux/cartSlice";
+
 const ItemList = (props) => {
 
     const { restaurantName, cloudinaryImageId, areaName } = props;

@@ -6,6 +6,7 @@ const RestaurantsCategory = ({ data, showItem, showIndex, restaurantName, areaNa
     const showToggle = () => {
         showIndex();
     }
+
     return (
         <div className="cursor-pointer bg-gray-50 mb-5 shadow-lg p-4" onClick={showToggle}>
             <div className="flex justify-between font-bold my-6 mb-5 text-3xl">
