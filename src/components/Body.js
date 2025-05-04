@@ -13,6 +13,7 @@ const Body = () => {
     const [restaurantsItems, setRestaurantsItems] = useState([]);
     const [intialRestaurantsItems, setIntialRestaurantsItems] = useState([]);
     const [searchText, setSearchText] = useState('');
+    const [chips, setChips] = useState([]);
 
     const PromtedRestaurants = promtedRestaurants(RestaurantsCard);
 
@@ -37,6 +38,31 @@ const Body = () => {
             return f.info.name.toLowerCase().includes(searchText.toLowerCase());
         });
         setRestaurantsItems(filteredSearchData);
+    }
+
+    const handleSearch = (event) => {
+        setSearchText(event.target.value);
+    }
+
+    const showAllRestaurant = () => {
+        setRestaurantsItems(intialRestaurantsItems);
+    }
+
+    const handleChips = (event) => {
+        if (event.key === "Enter" && searchText != "" && searchText.trim()) {
+            const filteredSearchData = intialRestaurantsItems.filter((f) => {
+                return f.info.name.toLowerCase().includes(searchText.toLowerCase());
+            });
+            setRestaurantsItems(filteredSearchData);
+            setChips(prev => [...prev, searchText]);
+            setSearchText("");
+        }
+    }
+
+    const deleteChip = (index) => {
+        const newChips = [...chips];
+        newChips.splice(index, 1);
+        setChips(newChips);
     }
 
     const filterTopRestaurants = () => {
@@ -73,14 +99,28 @@ const Body = () => {
             </div>
             <h1 className="pt-20 pb-10 px-5 mx-20 text-4xl">Restaurants with online food delivery in Bangalore</h1>
             <div className="flex p-5 mx-20">
-                <input type="text" className=" border border-solid border-black" value={searchText} onChange={(e) => {
-                    setSearchText(e.target.value);
-                }} />
+                <input type="text" className=" border border-solid border-black p-2" value={searchText} onChange={(e) => {
+                    handleSearch(e)
+                }} onKeyDown={(e) => handleChips(e)} />
                 <button className="bg-blue-400 text-white font-bold py-2 px-4 cursor-pointer" onClick={searchHandler}>Search</button>
+                <button className="bg-blue-400 text-white font-bold py-2 px-4 ml-10 cursor-pointer" onClick={showAllRestaurant}>All Restaurants</button>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-10 cursor-pointer rounded" onClick={filterTopRestaurants}>Top Restaurants</button>
                 <div className="text-2xl">UserName: <input value={loggedInUser} className="border border-black p-2" onChange={(e) => {
                     setUserName(e.target.value);
                 }} /></div>
+            </div>
+            <div className="flex p-5 mx-20">
+                {
+                    chips.map((item, index) => {
+                        return (
+                            <div key={index} className="mr-5">
+                                <div className="bg-gray-200 px-4 py-2 font-bold">{item}
+                                    <button className="pl-2 text-red-600 cursor-pointer" onClick={() => deleteChip(index)}>X</button>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
             </div>
             <div className="flex flex-wrap mx-20">
                 {
@@ -94,7 +134,6 @@ const Body = () => {
                 }
             </div>
         </div>
-
     )
 }
 export default Body;
